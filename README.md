@@ -25,7 +25,7 @@ This package provides the following modules:
 	- **ReactiveServices.MessageBus.IRequestBus**: Interface used to publish a request.
 	- **ReactiveServices.MessageBus.IResponseBus**: Interface used to listen for a request and publish a response.
 	- **ReactiveServices.MessageBus.ISendingBus**: Interface used to send a direct message.
-	- **ReactiveServices.MessageBus.ISendingBus**: Interface used listen for a direct message.
+	- **ReactiveServices.MessageBus.IReveivingBus**: Interface used listen for a direct message.
 
 ## License
 
