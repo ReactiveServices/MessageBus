@@ -19,3 +19,11 @@ test:
       - failing
       - unstable
       - slow
+assembly_info:
+  patch: true
+  file: ReactiveServices\MessageBus\Properties\AssemblyInfo.cs
+  assembly_informational_version: '{version}'
+assembly_info:
+  patch: true
+  file: ReactiveServices\MessageBus\RabbitMQ\Properties\AssemblyInfo.cs
+  assembly_informational_version: '{version}'

@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("0.2.*")]
 [assembly: AssemblyFileVersion("0.2.0.0")]
-
+[assembly: AssemblyInformationalVersion("0.2.0.0")]
 
 [assembly: InternalsVisibleTo("ReactiveServices.MessageBus.Tests")]
