@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using ReactiveServices.Configuration.ConfigurationFiles;
 using ReactiveServices.Extensions;
+using ReactiveServices.MessageBus.InSingleProcessMemory;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 
@@ -876,6 +877,12 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         {
             try
             {
+                if (DependencyResolver.Get<ISubscriptionBus>() is InSingleProcessMemorySubscriptionBus)
+                {
+                    InSingleProcessMemoryBus.SimulateRestart();
+                    return;
+                }
+
                 if (IsRabbitMQOnLocalHost())
                     WindowsService.Restart("RabbitMQ", TimeSpan.FromSeconds(15));
                 else

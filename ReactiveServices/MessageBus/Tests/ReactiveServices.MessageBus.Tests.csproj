@@ -62,12 +62,12 @@
       <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PostSharp, Version=4.1.20.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PostSharp.4.1.20\lib\net35-client\PostSharp.dll</HintPath>
+    <Reference Include="PostSharp, Version=4.1.21.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PostSharp.4.1.21\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Diagnostics, Version=4.1.20.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PostSharp.Patterns.Diagnostics.4.1.20\lib\net40\PostSharp.Patterns.Diagnostics.dll</HintPath>
+    <Reference Include="PostSharp.Patterns.Diagnostics, Version=4.1.21.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PostSharp.Patterns.Diagnostics.4.1.21\lib\net40\PostSharp.Patterns.Diagnostics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Renci.SshNet, Version=2013.4.7.0, Culture=neutral, processorArchitecture=MSIL">
@@ -171,9 +171,9 @@
       <Project>{0da6b5c5-085c-4ea7-b62f-b297b22d1a67}</Project>
       <Name>ReactiveServices.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RabbitMQ\ReactiveServices.MessageBus.RabbitMQ.csproj">
-      <Project>{681ededc-c9da-4d73-8294-abd408caed36}</Project>
-      <Name>ReactiveServices.MessageBus.RabbitMQ</Name>
+    <ProjectReference Include="..\InSingleProcessMemory\ReactiveServices.MessageBus.InSingleProcessMemory.csproj">
+      <Project>{f3014e5a-3cc8-4c5d-8be2-e28ab778f354}</Project>
+      <Name>ReactiveServices.MessageBus.InSingleProcessMemory</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReactiveServices.MessageBus.csproj">
       <Project>{e1759601-f341-419e-b978-7b753241c4d9}</Project>
@@ -194,10 +194,10 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\packages\PostSharp.4.1.20\tools\PostSharp.targets" Condition="Exists('..\..\packages\PostSharp.4.1.20\tools\PostSharp.targets')" />
+  <Import Project="..\..\packages\PostSharp.4.1.21\tools\PostSharp.targets" Condition="Exists('..\..\packages\PostSharp.4.1.21\tools\PostSharp.targets')" />
   <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\..\packages\PostSharp.4.1.20\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\..\packages\PostSharp.4.1.20\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="!Exists('..\..\packages\PostSharp.4.1.21\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\..\packages\PostSharp.4.1.21\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

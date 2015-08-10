@@ -6,11 +6,8 @@ using System.Threading;
 using System.Linq;
 using System.Diagnostics;
 using System.IO;
-using NUnit.Framework;
 using ReactiveServices.Authorization;
-using ReactiveServices.Configuration.ConfigurationFiles;
 using ReactiveServices.Extensions;
-using ReactiveServices.MessageBus.RabbitMQ;
 using ReactiveServices.MessageBus.Tests.UnitTests;
 
 namespace ReactiveServices.MessageBus.Tests.Specifications
@@ -171,7 +168,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         private readonly Dictionary<RequesterId, Tuple<IRequestBus, SubscriptionId>> Requesters = new Dictionary<RequesterId, Tuple<IRequestBus, SubscriptionId>>();
         private readonly Dictionary<ResponderId, IResponseBus> Responders = new Dictionary<ResponderId, IResponseBus>();
 
-        internal void RestartRabbitMQ()
+        internal void RestartMessageBroker()
         {
             MessageBusTests.RestartMessageBrokerToForceConnectionToBeLost();
         }
@@ -481,7 +478,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
             AuthorizedMessageReceivedOnReceivingBus = false;
 
             // Receive message that requires authorization
-            using (var receivingBus = DependencyResolver.Get<RabbitMQAuthorizedReceivingBus>())
+            using (var receivingBus = DependencyResolver.Get<IAuthorizedReceivingBus>())
             {
                 receivingBus.Receive<AMessage>(
                     SubscriptionId.FromString("Test"),
@@ -489,7 +486,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
                     );
 
                 // Send message that requires authorization
-                using (var sendingBus = DependencyResolver.Get<RabbitMQAuthorizedSendingBus>())
+                using (var sendingBus = DependencyResolver.Get<IAuthorizedSendingBus>())
                 {
                     var message = NewMessage<AMessage>();
                     sendingBus.Send(message, SubscriptionId.FromString("Test"), headers: AuthorizationHeaders());
@@ -504,7 +501,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
             AuthorizedMessageReceivedOnResponseBus = false;
 
             // Respond to message that requires authorization
-            using (var responseBus = DependencyResolver.Get<RabbitMQAuthorizedResponseBus>())
+            using (var responseBus = DependencyResolver.Get<IAuthorizedResponseBus>())
             {
                 responseBus.StartRespondingTo<RequestX, ResponseX>(
                     req =>
@@ -514,7 +511,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
                     }, headers: AuthorizationHeaders());
 
                 // Request message that requires authorization
-                using (var requestBus = DependencyResolver.Get<RabbitMQAuthorizedRequestBus>())
+                using (var requestBus = DependencyResolver.Get<IAuthorizedRequestBus>())
                 {
                     var message = NewMessage<RequestX>(RequesterId.FromString("Test"), RequestId.FromString("Test"));
                     requestBus.Request<RequestX, ResponseX>(message, headers: AuthorizationHeaders());
@@ -529,14 +526,14 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
             AuthorizedMessageReceivedOnSubscriptionBus = false;
 
             // Subscribe to message that requires authorization
-            using (var subscriptionBus = DependencyResolver.Get<RabbitMQAuthorizedSubscriptionBus>())
+            using (var subscriptionBus = DependencyResolver.Get<IAuthorizedSubscriptionBus>())
             {
                 subscriptionBus.SubscribeTo<AMessage>(SubscriptionId.FromString("Test"),
                     m => { AuthorizedMessageReceivedOnSubscriptionBus = true; }
                     );
 
                 // Publish message that requires authorization
-                using (var publishingBus = DependencyResolver.Get<RabbitMQAuthorizedPublishingBus>())
+                using (var publishingBus = DependencyResolver.Get<IAuthorizedPublishingBus>())
                 {
                     var message = NewMessage<AMessage>();
                     publishingBus.Publish(message, headers: AuthorizationHeaders());
@@ -586,5 +583,11 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         }
 
         #endregion
+
+        public void WaitMessageToBeProcessed()
+        {
+            //Give some time to message to be processed
+            Wait(1);
+        }
     }
 }

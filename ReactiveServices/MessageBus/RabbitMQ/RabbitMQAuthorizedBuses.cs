@@ -53,7 +53,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedPublishingBus : RabbitMQPublishingBus
+    public class RabbitMQAuthorizedPublishingBus : RabbitMQPublishingBus, IAuthorizedPublishingBus
     {
         protected override void TryPublish(
             Type messageType, TopicId topicId, object message, StorageType storageType, 
@@ -67,7 +67,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedSubscriptionBus : RabbitMQSubscriptionBus
+    public class RabbitMQAuthorizedSubscriptionBus : RabbitMQSubscriptionBus, IAuthorizedSubscriptionBus
     {
         protected override RabbitMQSubscription NewSubscribeSubscription(Type messageType, SubscriptionId subscriptionId, TopicId topicId, SubscriptionMode subscriptionMode,
             bool acceptMessagesOlderThanSubscriptionTime, Action<object> messageHandler, string queueName)
@@ -79,7 +79,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedRequestBus : RabbitMQRequestBus
+    public class RabbitMQAuthorizedRequestBus : RabbitMQRequestBus, IAuthorizedRequestBus
     {
         protected override RabbitMQSubscription NewResponseSubscription(Type responseType, string replyQueueName, Action<object, object> messageHandler)
         {
@@ -99,7 +99,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedResponseBus : RabbitMQResponseBus
+    public class RabbitMQAuthorizedResponseBus : RabbitMQResponseBus, IAuthorizedResponseBus
     {
         protected override RabbitMQSubscription NewRequestSubscription(Type requestType, string requestQueueName, Action<object, object> messageHandler)
         {
@@ -119,7 +119,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedSendingBus : RabbitMQSendingBus
+    public class RabbitMQAuthorizedSendingBus : RabbitMQSendingBus, IAuthorizedSendingBus
     {
         protected override void TrySend(
             Type messageType, object message, SubscriptionId subscriptionId, StorageType storageType, 
@@ -132,7 +132,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
         }
     }
 
-    public class RabbitMQAuthorizedReceivingBus : RabbitMQReceivingBus
+    public class RabbitMQAuthorizedReceivingBus : RabbitMQReceivingBus, IAuthorizedReceivingBus
     {
         protected override RabbitMQSubscription NewReceivingSubscription(Type messageType, SubscriptionId subscriptionId, SubscriptionMode subscriptionMode,
             bool acceptMessagesOlderThanSubscriptionTime, Action<object> messageHandler, string queueName)

@@ -163,7 +163,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [Given(@"o servidor de mensageria for reiniciado")]
         public void DadoOServidorDeMensageriaForReiniciado()
         {
-            Executor.RestartRabbitMQ();
+            Executor.RestartMessageBroker();
         }
 
         #endregion
@@ -264,7 +264,7 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [When(@"o servidor de mensageria for reiniciado")]
         public void QuandoOServidorDeMensageriaForReiniciado()
         {
-            Executor.RestartRabbitMQ();
+            Executor.RestartMessageBroker();
         }
 
         #endregion
@@ -273,12 +273,14 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [Then(@"a mensagem EventOccurred deve ser entregue ao assinante")]
         public void EntaoAMensagemEventOccurredDeveSerEntregueAoAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Should().NotBeEmpty();
             Executor.MessagesReceivedBySubscriber1.Should().ContainSingle(m => m is EventOccurred);
         }
         [Then(@"a mensagem OtherEventOccurred deve ser entregue ao assinante")]
         public void EntaoAMensagemOtherEventOccurredDeveSerEntregueAoAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Should().NotBeEmpty();
             Executor.MessagesReceivedBySubscriber1.Should().ContainSingle(m => m is OtherEventOccurred);
         }
@@ -286,12 +288,14 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [Then(@"a mensagem EventOccurred deve ser entregue ao outro assinante")]
         public void EntaoAMensagemEventOccurredDeveSerEntregueAoOutroAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Should().NotBeEmpty();
             Executor.MessagesReceivedBySubscriber2.Should().ContainSingle(m => m is EventOccurred);
         }
         [Then(@"a mensagem OtherEventOccurred deve ser entregue ao outro assinante")]
         public void EntaoAMensagemOtherEventOccurredDeveSerEntregueAoOutroAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Should().NotBeEmpty();
             Executor.MessagesReceivedBySubscriber2.Should().ContainSingle(m => m is OtherEventOccurred);
         }
@@ -299,28 +303,33 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [Then(@"a mensagem EventOccurred não deve ser entregue ao assinante")]
         public void EntaoAMensagemEventOccurredNaoDeveSerEntregueAoAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Should().NotContain(m => m is EventOccurred);
         }
         [Then(@"a mensagem OtherEventOccurred não deve ser entregue ao assinante")]
         public void EntaoAMensagemOtherEventOccurredNaoDeveSerEntregueAoAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Should().NotContain(m => m is OtherEventOccurred);
         }
 
         [Then(@"a mensagem EventOccurred não deve ser entregue ao outro assinante")]
         public void EntaoAMensagemEventOccurredNaoDeveSerEntregueAoOutroAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Should().NotContain(m => m is EventOccurred);
         }
         [Then(@"a mensagem OtherEventOccurred não deve ser entregue ao outro assinante")]
         public void EntaoAMensagemOtherEventOccurredNaoDeveSerEntregueAoOutroAssinante()
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Should().NotContain(m => m is OtherEventOccurred);
         }
 
         [Then(@"todas as informações relevantes devem estar presentes na mensagem EventOccurred")]
         public void EntaoTodasAsInformacoesRelevantesDevemEstarPresentesNaMensagemEventOccurred()
         {
+            Executor.WaitMessageToBeProcessed();
             var receivedMessage = Executor.MessagesReceivedBySubscriber1.SingleOrDefault(m => m is EventOccurred);
             Debug.Assert(receivedMessage != null, "receivedMessage != null");
             ((EventOccurred)receivedMessage).RelevantField1.Should().Be("RelevantField1Value");
@@ -330,21 +339,25 @@ namespace ReactiveServices.MessageBus.Tests.Specifications
         [Then(@"'(.*)' mensagens EventOccurred devem ser entregues ao assinante")]
         public void EntaoMensagensEventOccurredDevemSerEntreguesAoAssinante(int messageCount)
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Where(m => m is EventOccurred).Should().HaveCount(messageCount);
         }
         [Then(@"'(.*)' mensagens OtherEventOccurred devem ser entregues ao assinante")]
         public void EntaoMensagensOtherEventOccurredDevemSerEntreguesAoAssinante(int messageCount)
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber1.Where(m => m is OtherEventOccurred).Should().HaveCount(messageCount);
         }
         [Then(@"'(.*)' mensagens EventOccurred devem ser entregues ao outro assinante")]
         public void EntaoMensagensEventOccurredDevemSerEntreguesAoOutroAssinante(int messageCount)
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Where(m => m is EventOccurred).Should().HaveCount(messageCount);
         }
         [Then(@"'(.*)' mensagens OtherEventOccurred devem ser entregues ao outro assinante")]
         public void EntaoMensagensOtherEventOccurredDevemSerEntreguesAoOutroAssinante(int messageCount)
         {
+            Executor.WaitMessageToBeProcessed();
             Executor.MessagesReceivedBySubscriber2.Where(m => m is OtherEventOccurred).Should().HaveCount(messageCount);
         }
 
