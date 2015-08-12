@@ -151,7 +151,7 @@ Esquema do Cenário: Publicar um grande volume de diferentes mensagens para dois
 		| 50			|
 		| 100			|
 
-@stable @fast
+@stable @slow
 Esquema do Cenário: Publicar um grande volume de uma única mensagem para um único assinante, com timeout
 	Dado que um assinante se inscreva para receber a mensagem EventOccurred
 	E que a mensagem EventOccurred tenha uma validade de '<timeout>' segundos

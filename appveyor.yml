@@ -19,6 +19,7 @@ test:
       - failing
       - unstable
       - slow
+      - load
 assembly_info:
   patch: true
   file: ReactiveServices\MessageBus\Properties\AssemblyInfo.cs

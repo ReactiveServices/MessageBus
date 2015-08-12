@@ -257,6 +257,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         [TestCase("", "Generics", StorageType.NonPersistent, SubscriptionMode.Exclusive)]
         [Category("load")]
         [Category("stable")]
+        [Category("slow")]
         public void TestMessageTransferRate(string publishConfirmationMode, string messageTypeIdentificationMode, StorageType storageType, SubscriptionMode subscriptionMode)
         {
             DeleteQueues();
