@@ -161,7 +161,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Could not publish response of type '{0}'", responseType.Name), e);
+                Log.Error(e, "Could not publish response of type '{0}'", responseType.Name);
                 throw;
             }
         }

@@ -43,7 +43,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
 
         private void OnCallbackException(object sender, CallbackExceptionEventArgs e)
         {
-            Log.Error("Callback exception on RabbitMQ.Client", e.Exception);
+            Log.Error(e.Exception, "Callback exception on RabbitMQ.Client");
         }
 
         private void OnMessageReturnedFromBroker(object sender, BasicReturnEventArgs args)

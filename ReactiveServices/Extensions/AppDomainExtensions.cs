@@ -25,7 +25,7 @@ namespace ReactiveServices.Extensions
                     if (!IsExceptionOfInterest(e.Exception))
                         return;
 
-                    Log.Debug("First chance exception!", e.Exception);
+                    Log.Debug(e.Exception, "First chance exception!");
                 });
             }
             appDomain.UnhandledException += (s, e) =>
@@ -33,14 +33,14 @@ namespace ReactiveServices.Extensions
                 if (!IsExceptionOfInterest(e.ExceptionObject as Exception))
                     return;
 
-                Log.Fatal("Unhandled exception!", e.ExceptionObject as Exception);
+                Log.Fatal(e.ExceptionObject as Exception, "Unhandled exception!");
             };
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
                 if (!IsExceptionOfInterest(e.Exception))
                     return;
 
-                Log.Error("Unobserved task exception!", e.Exception as Exception);
+                Log.Error(e.Exception, "Unobserved task exception!");
             };
         }
 

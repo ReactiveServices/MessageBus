@@ -211,7 +211,7 @@ namespace ReactiveServices.Authorization
             catch (Exception e)
             {
                 // If some exception run, return InvalidAuthorizationSettings error
-                Log.Error(String.Format("Exception processing authorization request: {0}", e.Message), e);
+                Log.Error(e, "Exception processing authorization request: {0}", e.Message);
                 return AuthorizationError.InvalidAuthorizationSettings;
             }
         }

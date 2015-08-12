@@ -143,7 +143,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Error trying to exchange queue {0}!", exchangeName), e);
+                Log.Error(e, "Error trying to exchange queue {0}!", exchangeName);
             }
         }
 
@@ -213,7 +213,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Error trying to delete queue {0}!", queueName), e);
+                Log.Error(e, "Error trying to delete queue {0}!", queueName);
             }
         }
 

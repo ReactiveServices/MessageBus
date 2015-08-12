@@ -87,7 +87,7 @@ namespace ReactiveServices.Configuration.ConfigurationFiles
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Could not resolve dependencies", e);
+                    Log.Error(e, "Could not resolve dependencies");
                     throw;
                 }
             });

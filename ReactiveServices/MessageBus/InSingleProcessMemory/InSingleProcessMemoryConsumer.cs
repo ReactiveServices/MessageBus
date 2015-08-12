@@ -99,7 +99,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 }
                 catch (Exception e)
                 {
-                    Log.Error(String.Format("Exception executing message handler for subscription '{0}'!", Subscription.SubscriptionId), e);
+                    Log.Error(e, "Exception executing message handler for subscription '{0}'!", Subscription.SubscriptionId);
                     throw;
                 }
             });

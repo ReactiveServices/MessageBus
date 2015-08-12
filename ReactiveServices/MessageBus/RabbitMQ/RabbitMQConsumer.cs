@@ -84,7 +84,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
             {
                 Model.BasicNack(deliveryTag, false, true);
 
-                Log.Error(String.Format("Exception executing message handler for subscription '{0}'!", Subscription.SubscriptionId), e);
+                Log.Error(e, "Exception executing message handler for subscription '{0}'!", Subscription.SubscriptionId);
 
                 throw;
             }

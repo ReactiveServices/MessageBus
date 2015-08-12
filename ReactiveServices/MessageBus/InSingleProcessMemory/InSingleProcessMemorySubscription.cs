@@ -81,7 +81,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                     }
                     catch (Exception e)
                     {
-                        Log.Error("Error trying to reconnect subscription after connection lost!", e);
+                        Log.Error(e, "Error trying to reconnect subscription after connection lost!");
                     }
                     break;
                 }

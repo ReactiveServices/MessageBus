@@ -228,7 +228,7 @@ namespace ReactiveServices.MessageBus.RabbitMQ
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Could not publish request of type '{0}'", requestType.Name), e);
+                Log.Error(e, "Could not publish request of type '{0}'", requestType.Name);
                 throw;
             }
         }

@@ -82,7 +82,7 @@ namespace ReactiveServices.Configuration.TypeResolution
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Error resolving assembly '{0}'!", desiredAssemblyFullName), e);
+                Log.Error(e, "Error resolving assembly '{0}'!", desiredAssemblyFullName);
                 throw;
             }
             finally

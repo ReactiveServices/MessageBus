@@ -147,7 +147,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Could not send message of type '{0}' and delivery tag {1}!", messageType.Name, deliveryTag), e);
+                Log.Error(e, "Could not send message of type '{0}' and delivery tag {1}!", messageType.Name, deliveryTag);
                 Log.Debug("Message of type '{0}' and delivery tag {1}!", messageType.Name, deliveryTag);
                 throw;
             }

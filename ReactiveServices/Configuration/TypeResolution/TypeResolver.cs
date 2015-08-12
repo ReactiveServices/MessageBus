@@ -56,7 +56,7 @@ namespace ReactiveServices.Configuration.TypeResolution
             }
             catch (Exception e)
             {
-                Log.Error(String.Format("Error resolving type '{0}'!", typeName), e);
+                Log.Error(e, "Error resolving type '{0}'!", typeName);
                 throw;
             }
         }
