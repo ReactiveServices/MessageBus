@@ -318,9 +318,9 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
                     }
                     stopwatch.Stop();
                 }
-            }
 
-            Thread.Sleep(3000);
+                Thread.Sleep(1000);
+            }
 
             Console.WriteLine();
             Console.WriteLine("Published: {0}/s, Received: {1}/s, Runtime: {2}", publishedMessageCount / cicles, receivedMessageCount / cicles, runtime);

@@ -54,8 +54,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 {
                     try
                     {
-                        Thread.Sleep(1);
-
                         string[] exchanges;
                         lock (Exchanges)
                             exchanges = Exchanges.Keys.ToArray();
@@ -229,7 +227,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 {
                     try
                     {
-                        Thread.Sleep(1);
                         Queue<InSingleProcessMemoryMessage> queueBag;
                         lock (Queues)
                             Queues.TryGetValue(queue, out queueBag);
