@@ -337,7 +337,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
 
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeAfterPublish()
         {
@@ -364,7 +364,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeAfterSend()
         {
@@ -393,7 +393,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeAfterSubscribeTo()
         {
@@ -422,7 +422,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeAfterReceive()
         {
@@ -451,7 +451,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("slow")]
         public void TestDisposeAfterRequest()
         {
@@ -609,7 +609,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("slow")]
         public void TestDisposeWhileHandlingMessageOnStartRespondingTo()
         {
@@ -667,7 +667,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestAutoConnectBetweenPublishes()
         {
@@ -697,7 +697,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestAutoConnectBetweenSends()
         {
@@ -731,7 +731,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestAutoConnectAfterSubscribeTo()
         {
@@ -767,7 +767,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestAutoConnectAfterReceive()
         {
