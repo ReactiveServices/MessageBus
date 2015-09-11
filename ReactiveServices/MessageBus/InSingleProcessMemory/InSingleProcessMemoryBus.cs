@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using NLog;
 using ReactiveServices.Extensions;
 
@@ -46,33 +47,37 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
         private static readonly Dictionary<string, Queue<InSingleProcessMemoryMessage>> Exchanges = new Dictionary<string, Queue<InSingleProcessMemoryMessage>>();
         private static readonly List<InSingleProcessMemoryBinding> Bindings = new List<InSingleProcessMemoryBinding>();
 
+        private static bool ExchangesModified;
+
         private static void StartDispatchingIncomingMessages()
         {
-            var thread = new Thread(() =>
+            Task.Factory.StartNew(() =>
             {
+                string[] exchanges = null;
                 while (true)
                 {
                     try
                     {
-                        string[] exchanges;
-                        lock (Exchanges)
-                            exchanges = Exchanges.Keys.ToArray();
+                        if (exchanges == null || ExchangesModified)
+                        {
+                            ExchangesModified = false;
+
+                            lock (Exchanges)
+                                exchanges = Exchanges.Keys.ToArray();
+                        }
+
+                        Thread.Sleep(1);
 
                         foreach (var exchange in exchanges)
                         {
-                            DispatchMessagesToBoundQueues(exchange);
+                            DispatchMessagesToBoundQueues(exchange); 
                         }
                     }
                     catch (ThreadAbortException)
                     {
                     }
                 }
-            })
-            {
-                IsBackground = true,
-                Priority = ThreadPriority.AboveNormal
-            };
-            thread.Start();
+            }, TaskCreationOptions.LongRunning);
         }
 
         private static void DispatchMessagesToBoundQueues(string exchange)
@@ -176,7 +181,10 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             lock (Bindings)
                 Bindings.RemoveAll(b => b.ExchangeName == exchange);
             lock (Exchanges)
+            {
                 Exchanges.Remove(exchange);
+                ExchangesModified = true;
+            }
         }
 
         internal static void ExchangeDeclare(string exchange, string type)
@@ -184,7 +192,10 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             // type parameter is ignored
             lock (Exchanges)
                 if (!Exchanges.ContainsKey(exchange))
+                {
                     Exchanges[exchange] = new Queue<InSingleProcessMemoryMessage>();
+                    ExchangesModified = true;
+                }
         }
 
         internal static void BasicPublish(string exchange, string routingKey, IBasicProperties basicProperties, byte[] body)
@@ -230,6 +241,8 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                         Queue<InSingleProcessMemoryMessage> queueBag;
                         lock (Queues)
                             Queues.TryGetValue(queue, out queueBag);
+
+                        Thread.Sleep(1);
 
                         if (queueBag != null)
                             DequeueAndHandleNextMessage(consumer, queueBag);
