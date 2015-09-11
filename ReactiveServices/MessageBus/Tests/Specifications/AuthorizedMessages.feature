@@ -33,7 +33,7 @@ Cenário: Negar envio e recebimento de mensagens devido ao paramentro DenyByDefa
 	Quando a operação de envio ou recebimento de mensagens for executada
 	Então o envio ou recebimento não deve ser realizado
 
-@stable @fast
+@unstable @fast
 Cenário: Autorizar envio e recebimento de mensagens devido a resposta positiva de um serviço de autorização
 	Dado que o arquivo de configuração de autorização de mensagens exista
 	E uma mensagem a ser enviada ou recebida for uma mensagem discriminada no arquivo de configuração de autorização de mensagens

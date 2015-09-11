@@ -256,7 +256,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         [TestCase("WithPublishConfirms", "Generics", StorageType.NonPersistent, SubscriptionMode.Exclusive)]
         [TestCase("", "Generics", StorageType.NonPersistent, SubscriptionMode.Exclusive)]
         [Category("load")]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("slow")]
         public void TestMessageTransferRate(string publishConfirmationMode, string messageTypeIdentificationMode, StorageType storageType, SubscriptionMode subscriptionMode)
         {
@@ -517,7 +517,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
 
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeWhileHandlingMessageOnSubscribeTo()
         {
@@ -563,7 +563,7 @@ namespace ReactiveServices.MessageBus.Tests.UnitTests
         }
 
         [Test]
-        [Category("stable")]
+        [Category("unstable")]
         [Category("fast")]
         public void TestDisposeWhileHandlingMessageOnReceive()
         {
