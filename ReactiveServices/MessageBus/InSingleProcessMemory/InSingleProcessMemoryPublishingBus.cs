@@ -96,7 +96,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
 
                 var exchangeName = ExchangeNameFor(messageType);
                 var routingKey = RoutingKeyFor(topicId);
-                var messageBody = Serializer.Serialize(messageType, message);
+                var messageBody = message;
 
                 //About the Publish Confirms, see this http://www.rabbitmq.com/blog/2011/02/10/introducing-publisher-confirms/
 
@@ -129,8 +129,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
 
                         Log.Info("Message with delivery tag '{0}' published to exchange '{1}' with routing key '{2}'",
                             deliveryTag, exchangeName, routingKey);
-                        Log.Debug("Message with delivery tag '{0}': '{1}'", deliveryTag,
-                            Encoding.UTF8.GetString(messageBody));
 
                         if (!waitForPublishConfirmation)
                             return;

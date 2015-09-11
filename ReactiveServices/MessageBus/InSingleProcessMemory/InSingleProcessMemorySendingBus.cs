@@ -60,7 +60,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                     publishConfirmationTimeout = TimeSpan.FromSeconds(30);
 
                 var destinationQueueName = QueueNameFor(messageType, subscriptionId);
-                var messageBody = Serializer.Serialize(messageType, message);
+                var messageBody = message;
 
                 //About the Publish Confirms, see this http://www.InSingleProcessMemory.com/blog/2011/02/10/introducing-publisher-confirms/
 
@@ -97,7 +97,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                         model.BasicPublish("", destinationQueueName, props, messageBody);
 
                         Log.Info("Message with delivery tag '{0}' sent to queue '{1}'", deliveryTag, destinationQueueName);
-                        Log.Debug("Message with delivery tag '{0}': '{1}'", deliveryTag, Encoding.UTF8.GetString(messageBody));
 
                         if (!waitForPublishConfirmation)
                             return;

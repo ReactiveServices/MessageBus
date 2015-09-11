@@ -497,11 +497,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 142
  testRunner.Then(string.Format("\'{0}\' mensagens EventOccurred devem ser entregues ao assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line 143
- testRunner.And(string.Format("\'{0}\' mensagens OtherEventOccurred devem ser entreguem ao assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And(string.Format("\'{0}\' mensagens OtherEventOccurred devem ser entregues ao assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line 144
- testRunner.And(string.Format("\'{0}\' mensagens EventOccurred devem ser entreguem ao outro assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And(string.Format("\'{0}\' mensagens EventOccurred devem ser entregues ao outro assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line 145
- testRunner.And(string.Format("\'{0}\' mensagens OtherEventOccurred devem ser entreguem ao outro assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
+ testRunner.And(string.Format("\'{0}\' mensagens OtherEventOccurred devem ser entregues ao outro assinante", messageCount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "E ");
 #line hidden
             this.ScenarioCleanup();
         }

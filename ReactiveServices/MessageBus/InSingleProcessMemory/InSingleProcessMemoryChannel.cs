@@ -32,7 +32,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             InSingleProcessMemoryBus.BasicConsume(queue, noAck, consumer);
         }
 
-        public void BasicPublish(string exchange, string routingKey, IBasicProperties basicProperties, byte[] body)
+        public void BasicPublish(string exchange, string routingKey, IBasicProperties basicProperties, object body)
         {
             InSingleProcessMemoryBus.BasicPublish(exchange, routingKey, basicProperties, body);
         }

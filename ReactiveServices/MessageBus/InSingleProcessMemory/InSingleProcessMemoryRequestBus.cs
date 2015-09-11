@@ -203,7 +203,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 var requestQueueName = subscriptionId == null
                     ? QueueNameFor(requestType)
                     : QueueNameFor(requestType, subscriptionId);
-                var requestMessageBody = Serializer.Serialize(requestType, request);
+                var requestMessageBody = request;
 
                 using (var model = NewChannel())
                 {
@@ -223,7 +223,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                     model.BasicPublish("", requestQueueName, props, requestMessageBody);
                 }
                 Log.Info("Request with correlation id '{0}' published to queue '{1}' waiting reply on queue '{2}'", correlationId, requestQueueName, replyQueueName);
-                Log.Debug("Request with correlation id '{0}': '{1}'", correlationId, Encoding.UTF8.GetString(requestMessageBody));
             }
             catch (Exception e)
             {

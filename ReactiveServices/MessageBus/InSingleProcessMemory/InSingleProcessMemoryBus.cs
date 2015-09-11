@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using ReactiveServices.Extensions;
@@ -13,7 +12,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
         public class InSingleProcessMemoryMessage
         {
             public InSingleProcessMemoryMessage(ulong deliveryTag, string routingKey, IBasicProperties properties,
-                byte[] body)
+                object body)
             {
                 DeliveryTag = deliveryTag;
                 RoutingKey = routingKey;
@@ -24,7 +23,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             public ulong DeliveryTag { get; private set; }
             public string RoutingKey { get; private set; }
             public IBasicProperties BasicProperties { get; private set; }
-            public byte[] Body { get; private set; }
+            public object Body { get; private set; }
         }
 
         public struct InSingleProcessMemoryBinding
@@ -56,25 +55,19 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 string[] exchanges = null;
                 while (true)
                 {
-                    try
+                    if (exchanges == null || ExchangesModified)
                     {
-                        if (exchanges == null || ExchangesModified)
-                        {
-                            ExchangesModified = false;
+                        ExchangesModified = false;
 
-                            lock (Exchanges)
-                                exchanges = Exchanges.Keys.ToArray();
-                        }
-
-                        Thread.Sleep(1);
-
-                        foreach (var exchange in exchanges)
-                        {
-                            DispatchMessagesToBoundQueues(exchange); 
-                        }
+                        lock (Exchanges)
+                            exchanges = Exchanges.Keys.ToArray();
                     }
-                    catch (ThreadAbortException)
+
+                    //Thread.Sleep(1);
+
+                    foreach (var exchange in exchanges)
                     {
+                        DispatchMessagesToBoundQueues(exchange);
                     }
                 }
             }, TaskCreationOptions.LongRunning);
@@ -140,7 +133,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
         {
             lock (Queues)
                 Queues.Remove(queue);
-            
+
             return 0;
         }
 
@@ -198,7 +191,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 }
         }
 
-        internal static void BasicPublish(string exchange, string routingKey, IBasicProperties basicProperties, byte[] body)
+        internal static void BasicPublish(string exchange, string routingKey, IBasicProperties basicProperties, object body)
         {
             EnsureAMQPDefaultExists();
 
@@ -236,21 +229,17 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 Log.Info("Starting consuming thread at consumer '{0}'", consumer.Id);
                 while (true)
                 {
-                    try
-                    {
-                        Queue<InSingleProcessMemoryMessage> queueBag;
-                        lock (Queues)
-                            Queues.TryGetValue(queue, out queueBag);
+                    if (consumer.IsCancellationRequested)
+                        break;
 
-                        Thread.Sleep(1);
+                    Queue<InSingleProcessMemoryMessage> queueBag;
+                    lock (Queues)
+                        Queues.TryGetValue(queue, out queueBag);
 
-                        if (queueBag != null)
-                            DequeueAndHandleNextMessage(consumer, queueBag);
-                    }
-                    catch (ThreadAbortException)
-                    {
-                        Log.Info("Stopping consuming thread at consumer '{0}'", consumer.Id);
-                    }
+                    //Thread.Sleep(1);
+
+                    if (queueBag != null)
+                        DequeueAndHandleNextMessage(consumer, queueBag);
                 }
             });
         }

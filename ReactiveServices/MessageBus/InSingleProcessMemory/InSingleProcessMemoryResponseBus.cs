@@ -138,7 +138,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
         {
             try
             {
-                var responseMessageBody = Serializer.Serialize(responseType, response);
+                var responseMessageBody = response;
                 using (var model = NewChannel())
                 {
                     var props = model.CreateBasicProperties();
@@ -156,7 +156,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                     model.BasicPublish("", replyQueueName, props, responseMessageBody);
 
                     Log.Info("Response for request with correlation id '{0}' published to queue '{1}'", props.CorrelationId, replyQueueName);
-                    Log.Debug("Response for request with correlation id '{0}': '{1}'", props.CorrelationId, Encoding.UTF8.GetString(responseMessageBody));
                 }
             }
             catch (Exception e)

@@ -20,8 +20,9 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
 
     public interface IBasicConsumer
     {
-        void HandleBasicDeliver(ulong deliveryTag, IBasicProperties properties, byte[] body);
-        void StartConsumingThread(ThreadStart threadStart);
+        void HandleBasicDeliver(ulong deliveryTag, IBasicProperties properties, object body);
+        void StartConsumingThread(Action consumeAction);
+        bool IsCancellationRequested { get; }
         Guid Id { get; }
     }
 

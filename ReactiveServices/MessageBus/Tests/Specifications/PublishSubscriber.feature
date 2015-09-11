@@ -140,9 +140,9 @@ Esquema do Cenário: Publicar um grande volume de diferentes mensagens para dois
 	Quando '<messageCount>' mensagens EventOccurred forem publicadas no barramento
 	E '<messageCount>' mensagens OtherEventOccurred forem publicadas no barramento
 	Então '<messageCount>' mensagens EventOccurred devem ser entregues ao assinante
-	E '<messageCount>' mensagens OtherEventOccurred devem ser entreguem ao assinante
-	E '<messageCount>' mensagens EventOccurred devem ser entreguem ao outro assinante
-	E '<messageCount>' mensagens OtherEventOccurred devem ser entreguem ao outro assinante
+	E '<messageCount>' mensagens OtherEventOccurred devem ser entregues ao assinante
+	E '<messageCount>' mensagens EventOccurred devem ser entregues ao outro assinante
+	E '<messageCount>' mensagens OtherEventOccurred devem ser entregues ao outro assinante
 	
 	Exemplos:
 		| messageCount	|

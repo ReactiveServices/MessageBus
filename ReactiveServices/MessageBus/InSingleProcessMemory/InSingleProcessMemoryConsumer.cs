@@ -68,9 +68,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             get { return true; }
         }
 
-        protected static readonly IMessageSerializer Serializer = DependencyResolver.Get<IMessageSerializer>();
-
-        public void HandleBasicDeliver(ulong deliveryTag, IBasicProperties properties, byte[] body)
+        public void HandleBasicDeliver(ulong deliveryTag, IBasicProperties properties, object body)
         {
             if (!Model.IsOpen) return;
 
@@ -78,7 +76,7 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
 
             Task.Run(() =>
             {
-                var messageObject = Serializer.Deserialize(body, Subscription.MessageType);
+                var messageObject = body;
 
                 var propertyHeaders = properties.Headers;
                 var headers = new Dictionary<string, string>();
@@ -91,7 +89,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
                 }
 
                 Log.Info("Executing handler for delivery tag '{0}' from queue '{1}'", deliveryTag, Subscription.QueueName);
-                Log.Debug("Message with delivery tag '{0}': '{1}'", deliveryTag, Encoding.UTF8.GetString(body));
 
                 try
                 {
@@ -125,24 +122,26 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             Model.Close();
             Model.Dispose();
 
-            if (ConsumingThread != null && ConsumingThread.IsAlive)
-                ConsumingThread.Abort();
+            ConsumingThreadCancellationTokenSource.Cancel();
 
             Log.Info("Stop consuming queue '{0}'", Subscription.QueueName);
         }
 
         public event EventHandler<ConsumerEventArgs> ConsumerCancelled;
 
-        private Thread ConsumingThread { get; set; }
+        private readonly CancellationTokenSource ConsumingThreadCancellationTokenSource = new CancellationTokenSource();
 
-        public void StartConsumingThread(ThreadStart threadStart)
+        public void StartConsumingThread(Action consumeAction)
         {
-            ConsumingThread = new Thread(threadStart)
+            Task.Factory.StartNew(consumeAction, ConsumingThreadCancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        public bool IsCancellationRequested
+        {
+            get
             {
-                Priority = ThreadPriority.AboveNormal, 
-                IsBackground = true
-            };
-            ConsumingThread.Start();
+                return ConsumingThreadCancellationTokenSource.IsCancellationRequested;
+            }
         }
     }
 }

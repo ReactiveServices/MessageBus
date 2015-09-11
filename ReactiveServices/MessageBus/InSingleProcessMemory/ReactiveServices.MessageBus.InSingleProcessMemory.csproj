@@ -60,10 +60,8 @@
     <Compile Include="InSingleProcessMemoryBus.cs" />
     <Compile Include="InSingleProcessMemoryTypes.cs" />
     <Compile Include="InSingleProcessMemoryAuthorizedBuses.cs" />
-    <Compile Include="InSingleProcessMemoryBsonSerializer.cs" />
     <Compile Include="InSingleProcessMemoryChannel.cs" />
     <Compile Include="InSingleProcessMemoryConsumer.cs" />
-    <Compile Include="InSingleProcessMemoryJsonSerializer.cs" />
     <Compile Include="InSingleProcessMemoryMessageBus.cs" />
     <Compile Include="InSingleProcessMemoryPublishingBus.cs" />
     <Compile Include="InSingleProcessMemoryReceivingBus.cs" />

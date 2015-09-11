@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Globalization;
-using ReactiveServices.Configuration;
 using ReactiveServices.Extensions;
 
 namespace ReactiveServices.MessageBus.InSingleProcessMemory
@@ -22,8 +21,6 @@ namespace ReactiveServices.MessageBus.InSingleProcessMemory
             var model = new InSingleProcessMemoryChannel();
             return model;
         }
-
-        protected static readonly IMessageSerializer Serializer = DependencyResolver.Get<IMessageSerializer>();
 
         protected static string QueueNameFor(Type messageType)
         {
