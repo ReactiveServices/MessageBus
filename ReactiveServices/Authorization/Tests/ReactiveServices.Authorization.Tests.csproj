@@ -71,10 +71,6 @@
       <Project>{2a8ddafd-0b2b-4798-89b6-ee43afb380f7}</Project>
       <Name>ReactiveServices.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MessageBus\RabbitMQ\ReactiveServices.MessageBus.RabbitMQ.csproj">
-      <Project>{681ededc-c9da-4d73-8294-abd408caed36}</Project>
-      <Name>ReactiveServices.MessageBus.RabbitMQ</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MessageBus\ReactiveServices.MessageBus.csproj">
       <Project>{e1759601-f341-419e-b978-7b753241c4d9}</Project>
       <Name>ReactiveServices.MessageBus</Name>
