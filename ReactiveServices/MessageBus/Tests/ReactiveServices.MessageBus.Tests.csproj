@@ -112,10 +112,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorization\ReactiveServices.Authorization.csproj">
-      <Project>{7cd6309f-c689-4111-b58d-88f5ba9f3cc4}</Project>
-      <Name>ReactiveServices.Authorization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Configuration\ReactiveServices.Configuration.csproj">
       <Project>{2A8DDAFD-0B2B-4798-89B6-EE43AFB380F7}</Project>
       <Name>ReactiveServices.Configuration</Name>
