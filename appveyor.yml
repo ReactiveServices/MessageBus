@@ -5,7 +5,7 @@ cache: ReactiveServices/packages
 before_build:
 - nuget restore ReactiveServices/ReactiveServices.MessageBus.sln
 after_build:
-- nuget pack ReactiveServices/MessageBus/ReactiveServices.MessageBus.csproj -IncludeReferencedProjects -Properties Configuration=Release -Properties Platform=AnyCPU
+- nuget pack ReactiveServices/MessageBus/ReactiveServices.MessageBus.csproj -IncludeReferencedProjects -Symbols -Properties Configuration=Release -Properties Platform=AnyCPU
 build:
   project: ReactiveServices/ReactiveServices.MessageBus.sln
   verbosity: minimal
